@@ -1,6 +1,7 @@
 var auction_price, base_pkg, base_prices, check_for_description, check_for_pkg, check_for_submit, check_for_variables, delivery_price, edit_form, modify, my_close, my_open, o, open_pages, price_format, run, us_price, ww_price;
 
 o = {
+  auto: false,
   codex: /\[\w+\|\d+\/\d+\]/,
   submit: null,
   description: null,
@@ -35,12 +36,14 @@ my_open = function(url, id) {
 
 my_close = function() {
   var window_close;
-  console.log("Trying to close window.");
-  if (o.interval != null) clearInterval(o.interval);
-  window_close = function() {
-    return window.close();
-  };
-  return setTimeout(window_close, o.timeout);
+  if (o.auto) {
+    console.log("Trying to close window.");
+    if (o.interval != null) clearInterval(o.interval);
+    window_close = function() {
+      return window.close();
+    };
+    return setTimeout(window_close, o.timeout);
+  }
 };
 
 price_format = function(p) {
@@ -104,10 +107,12 @@ edit_form = function() {
   edits += modify(o.delivery2, delivery_price(document.getElementById("delivery2_country").value));
   if (edits > 0) {
     console.log("There were " + edits + " edits.");
-    clickit = function() {
-      return o.submit.click();
-    };
-    return setTimeout(clikckit, o.timeout);
+    if (o.auto) {
+      clickit = function() {
+        return o.submit.click();
+      };
+      return setTimeout(clikckit, o.timeout);
+    }
   } else {
     console.log("There were no edits.");
     return my_close();

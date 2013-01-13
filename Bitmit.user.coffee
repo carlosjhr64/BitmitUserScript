@@ -7,6 +7,7 @@
 # ==/UserScript==
 
 o =
+  auto: false # automatic submit and close
   codex: /\[\w+\|\d+\/\d+\]/
   submit: null
   description: null
@@ -39,10 +40,11 @@ my_open = (url, id) ->
   #window.focus(); # TODO :-??
 
 my_close = () ->
-  console.log "Trying to close window."
-  clearInterval(o.interval)  if o.interval?
-  window_close = () -> window.close()
-  setTimeout(window_close, o.timeout)
+  if o.auto
+    console.log "Trying to close window."
+    clearInterval(o.interval)  if o.interval?
+    window_close = () -> window.close()
+    setTimeout(window_close, o.timeout)
 
 price_format = (p) ->
   p.toFixed(3)
@@ -93,8 +95,9 @@ edit_form = () ->
   delivery_price(document.getElementById("delivery2_country").value))
   if edits > 0
     console.log "There were #{edits} edits."
-    clickit = () -> o.submit.click()
-    setTimeout(clikckit, o.timeout)
+    if o.auto
+      clickit = () -> o.submit.click()
+      setTimeout(clikckit, o.timeout)
   else
     console.log("There were no edits.")
     my_close()
@@ -138,7 +141,7 @@ open_pages = (list) ->
       o.count += 1
       my_open("https://www.bitmit.net/en/cp/sell/edit/#{id}", id)
 
-check_for_submit = ->
+check_for_submit = () ->
   o.submit = document.getElementById("formItemSellSubmit")
   if o.submit
     clearInterval(o.interval)
@@ -155,7 +158,7 @@ check_for_submit = ->
           open_pages_list = () -> open_pages(list)
           o.interval = setInterval(open_pages_list, o.timeout)
 
-run = ->
+run = () ->
   href = location.href
   console.log href
   switch href.substring(0, o.item_page.length)
