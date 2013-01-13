@@ -6,6 +6,36 @@
 # @version     1
 # ==/UserScript==
 
+usps = (type, oz) ->
+  switch type
+    when 'ltt'
+      return 0.45 if oz <= 1
+      return 0.65 if oz <= 2
+      return 0.85 if oz <= 3.5
+      return usps('flt', oz)
+    when 'flt'
+      n = (oz - 1).toFixed(0)
+      return 0.90 + n*0.20 if oz < 13
+      return usps('pkg', oz)
+    when 'pkg'
+      n = (oz - 3).toFixed(0)
+      n = 0 if n < 0
+      return 1.95 + n*0.17
+    when 'mda'
+      p1 = usps('pkg', oz)
+      n = (oz/16).toFixed(0)
+      p2 = [2.38, 2.77, 3.16, 3.55, 3.94, 4.47, 4.99][n]
+      unless p2
+        p2 = 4.99 + (n-7)*0.40
+      return p1 if p1 < p2
+      return p2
+    when 'ukpkg'
+      n = (oz - 1).toFixed(0)
+      return 3.00 + n*0.78 if oz < 9
+      return 10.03 if oz < 13
+      n = (1 + (oz - 13)/4).toFixed(0)
+      return 10.03 * n*1.57
+
 o =
   auto: false # automatic submit and close
   codex: /\[\w+\|\d+\/\d+\]/
@@ -23,12 +53,11 @@ o =
   count: null
   target: null
   packages:
-    CD: true
-    MG: true
-    PB: true
-    BK: true
-    HH: true
-    PK: true
+    ltt: true
+    flt: true
+    pkg: true
+    mda: true
+    lpk: true
 
   pkg: null
   timeout: 5000
