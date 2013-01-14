@@ -54,7 +54,8 @@ o = {
     PB: true,
     BK: true,
     HH: true,
-    PK: true
+    PK: true,
+    PKG: true
   },
   pkg: null,
   timeout: 5000

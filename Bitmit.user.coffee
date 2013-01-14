@@ -59,6 +59,7 @@ o =
     BK: true
     HH: true
     PK: true
+    PKG: true
 
   pkg: null
   timeout: 5000
