@@ -53,11 +53,12 @@ o =
   count: null
   target: null
   packages:
-    ltt: true
-    flt: true
-    pkg: true
-    mda: true
-    lpk: true
+    CD: true
+    MG: true
+    PB: true
+    BK: true
+    HH: true
+    PK: true
 
   pkg: null
   timeout: 5000
