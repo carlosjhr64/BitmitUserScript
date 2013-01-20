@@ -37,16 +37,18 @@ usps = (type, oz) ->
       return 10.03 * n*1.57
 
 o =
-  auto: false # automatic submit and close
+  auto: true # automatic submit and close
   codex: /\[\w+\|\d+\/\d+\]/
   submit: null
   description: null
   price: null
   delivery1: null
   delivery2: null
-  b2d: 13.50
-  us: 0.959
-  ww: 0.78636
+  exp_date: null
+  exp_date_value: '01/27/13 12:00'
+  b2d: 14.05
+  us: 0.961
+  ww: 0.832
   item_page: "https://www.bitmit.net/en/item/"
   sell_page: "https://www.bitmit.net/en/cp/se"
   interval: null
@@ -110,25 +112,31 @@ delivery_price = (country) ->
   console.log("#{country} delivery=#{delivery}")
   delivery
 
-modify = (s, n) ->
+modify_n = (s, n) ->
   n = price_format(n)
   # Check if it actually needs to be modified
   return (0)  if parseFloat(s.value) is parseFloat(n)
   s.value = n
   1
 
+modify_t = (s, t) ->
+  return (0)  if s.value is t
+  s.value = t
+  1
+
 edit_form = () ->
   edits = 0
-  edits += modify(o.price, auction_price())
-  edits += modify(o.delivery1,
+  edits += modify_n(o.price, auction_price())
+  edits += modify_n(o.delivery1,
   delivery_price(document.getElementById("delivery1_country").value))
-  edits += modify(o.delivery2,
+  edits += modify_n(o.delivery2,
   delivery_price(document.getElementById("delivery2_country").value))
+  edits += modify_t(o.exp_date, o.exp_date_value)
   if edits > 0
     console.log "There were #{edits} edits."
     if o.auto
       clickit = () -> o.submit.click()
-      setTimeout(clikckit, o.timeout)
+      setTimeout(clickit, o.timeout)
   else
     console.log("There were no edits.")
     my_close()
@@ -139,7 +147,8 @@ check_for_variables = () ->
   if o.price.value?
     o.delivery1 = document.getElementById("delivery1_price")
     o.delivery2 = document.getElementById("delivery2_price")
-    go = true  if (o.delivery1?) and (o.delivery2?)
+    o.exp_date = document.getElementById("itemDurationEndtimeCalendar")
+    go = true  if (o.delivery1?) and (o.delivery2?) and (o.exp_date?)
   if go
     edit_form()
   else

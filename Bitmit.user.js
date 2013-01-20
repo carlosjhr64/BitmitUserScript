@@ -1,4 +1,4 @@
-var auction_price, base_pkg, base_prices, check_for_description, check_for_pkg, check_for_submit, check_for_variables, delivery_price, edit_form, modify, my_close, my_open, o, open_pages, price_format, run, us_price, usps, ww_price;
+var auction_price, base_pkg, base_prices, check_for_description, check_for_pkg, check_for_submit, check_for_variables, delivery_price, edit_form, modify_n, modify_t, my_close, my_open, o, open_pages, price_format, run, us_price, usps, ww_price;
 
 usps = function(type, oz) {
   var n, p1, p2;
@@ -33,16 +33,18 @@ usps = function(type, oz) {
 };
 
 o = {
-  auto: false,
+  auto: true,
   codex: /\[\w+\|\d+\/\d+\]/,
   submit: null,
   description: null,
   price: null,
   delivery1: null,
   delivery2: null,
-  b2d: 13.50,
-  us: 0.959,
-  ww: 0.78636,
+  exp_date: null,
+  exp_date_value: '01/27/13 12:00',
+  b2d: 14.05,
+  us: 0.961,
+  ww: 0.832,
   item_page: "https://www.bitmit.net/en/item/",
   sell_page: "https://www.bitmit.net/en/cp/se",
   interval: null,
@@ -125,26 +127,33 @@ delivery_price = function(country) {
   return delivery;
 };
 
-modify = function(s, n) {
+modify_n = function(s, n) {
   n = price_format(n);
   if (parseFloat(s.value) === parseFloat(n)) return 0.;
   s.value = n;
   return 1;
 };
 
+modify_t = function(s, t) {
+  if (s.value === t) return 0.;
+  s.value = t;
+  return 1;
+};
+
 edit_form = function() {
   var clickit, edits;
   edits = 0;
-  edits += modify(o.price, auction_price());
-  edits += modify(o.delivery1, delivery_price(document.getElementById("delivery1_country").value));
-  edits += modify(o.delivery2, delivery_price(document.getElementById("delivery2_country").value));
+  edits += modify_n(o.price, auction_price());
+  edits += modify_n(o.delivery1, delivery_price(document.getElementById("delivery1_country").value));
+  edits += modify_n(o.delivery2, delivery_price(document.getElementById("delivery2_country").value));
+  edits += modify_t(o.exp_date, o.exp_date_value);
   if (edits > 0) {
     console.log("There were " + edits + " edits.");
     if (o.auto) {
       clickit = function() {
         return o.submit.click();
       };
-      return setTimeout(clikckit, o.timeout);
+      return setTimeout(clickit, o.timeout);
     }
   } else {
     console.log("There were no edits.");
@@ -159,7 +168,10 @@ check_for_variables = function() {
   if (o.price.value != null) {
     o.delivery1 = document.getElementById("delivery1_price");
     o.delivery2 = document.getElementById("delivery2_price");
-    if ((o.delivery1 != null) && (o.delivery2 != null)) go = true;
+    o.exp_date = document.getElementById("itemDurationEndtimeCalendar");
+    if ((o.delivery1 != null) && (o.delivery2 != null) && (o.exp_date != null)) {
+      go = true;
+    }
   }
   if (go) {
     return edit_form();
