@@ -60,7 +60,7 @@ o = {
   delivery1: null,
   delivery2: null,
   exp_date: null,
-  exp_date_value: '01/27/13 12:00',
+  exp_date_value: '02/03/13 12:00',
   b2d: 15.33,
   us: 0.962,
   ww: 0.833,
