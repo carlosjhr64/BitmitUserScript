@@ -37,7 +37,7 @@ usps = (type, oz) ->
       return 10.03 * n*1.57
 
 o =
-  auto: true # automatic submit and close
+  auto: false # automatic submit and close
   codex: /\[\w+\|\d+\/\d+\]/
   submit: null
   description: null
@@ -62,6 +62,7 @@ o =
     HH: true
     PK: true
     PKG: true
+    pkg: true
 
   pkg: null
   timeout: 5000
@@ -82,15 +83,23 @@ my_close = () ->
 price_format = (p) ->
   p.toFixed(3)
 
-base_prices = () ->
-  ((o.description.value.match(o.codex))[0]).match(/\d+/g)
-
 base_pkg = () ->
   ((o.description.value.match(o.codex))[0]).match(/\w+/)[0]
 
-us_price = () -> parseFloat(base_prices()[0]) / 100.0
+base_prices = () ->
+  prices = ((o.description.value.match(o.codex))[0]).match(/\d+/g)
+  if base_pkg() is 'pkg'
+    oz = parseFloat(prices[0])
+    us = usps('pkg', oz)
+    uk = usps('ukpkg', oz)
+    prices = [us, uk]
+  else
+    prices = prices.map((p) -> parseFloat(p)/100.0)
+  prices
 
-ww_price = () -> parseFloat(base_prices()[1]) / 100.0
+us_price = () -> base_prices()[0]
+
+ww_price = () -> base_prices()[1]
 
 auction_price = () ->
   us = us_price()

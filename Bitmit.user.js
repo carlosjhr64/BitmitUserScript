@@ -52,7 +52,7 @@ usps = function(type, oz) {
 };
 
 o = {
-  auto: true,
+  auto: false,
   codex: /\[\w+\|\d+\/\d+\]/,
   submit: null,
   description: null,
@@ -76,7 +76,8 @@ o = {
     BK: true,
     HH: true,
     PK: true,
-    PKG: true
+    PKG: true,
+    pkg: true
   },
   pkg: null,
   timeout: 5000
@@ -106,20 +107,32 @@ price_format = function(p) {
   return p.toFixed(3);
 };
 
-base_prices = function() {
-  return (o.description.value.match(o.codex))[0].match(/\d+/g);
-};
-
 base_pkg = function() {
   return (o.description.value.match(o.codex))[0].match(/\w+/)[0];
 };
 
+base_prices = function() {
+  var oz, prices, uk, us;
+  prices = (o.description.value.match(o.codex))[0].match(/\d+/g);
+  if (base_pkg() === 'pkg') {
+    oz = parseFloat(prices[0]);
+    us = usps('pkg', oz);
+    uk = usps('ukpkg', oz);
+    prices = [us, uk];
+  } else {
+    prices = prices.map(function(p) {
+      return parseFloat(p) / 100.0;
+    });
+  }
+  return prices;
+};
+
 us_price = function() {
-  return parseFloat(base_prices()[0]) / 100.0;
+  return base_prices()[0];
 };
 
 ww_price = function() {
-  return parseFloat(base_prices()[1]) / 100.0;
+  return base_prices()[1];
 };
 
 auction_price = function() {
