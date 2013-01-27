@@ -46,9 +46,9 @@ o =
   delivery2: null
   exp_date: null
   exp_date_value: '01/27/13 12:00'
-  b2d: 14.05
-  us: 0.961
-  ww: 0.832
+  b2d: 15.33
+  us: 0.962
+  ww: 0.833
   item_page: "https://www.bitmit.net/en/item/"
   sell_page: "https://www.bitmit.net/en/cp/se"
   interval: null
