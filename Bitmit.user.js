@@ -52,7 +52,7 @@ usps = function(type, oz) {
 };
 
 o = {
-  auto: false,
+  auto: true,
   codex: /\[\w+\|\d+\/\d+\]/,
   submit: null,
   description: null,
@@ -60,9 +60,9 @@ o = {
   delivery1: null,
   delivery2: null,
   exp_date: null,
-  exp_date_value: '02/03/13 12:00',
-  b2d: 15.33,
-  us: 0.962,
+  exp_date_value: '02/10/13 12:00',
+  b2d: 16.75,
+  us: 0.961,
   ww: 0.833,
   item_page: "https://www.bitmit.net/en/item/",
   sell_page: "https://www.bitmit.net/en/cp/se",
