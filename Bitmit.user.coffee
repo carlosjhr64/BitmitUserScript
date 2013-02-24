@@ -37,6 +37,10 @@ usps = (type, oz) ->
       return 10.03 * n*1.57
 
 o =
+  exp_date_value: '03/03/13 12:00'
+  b2d: 23.68
+  us: 0.963
+  ww: 0.845
   auto: true # automatic submit and close
   codex: /\[\w+\|\d+\/\d+\]/
   submit: null
@@ -45,10 +49,6 @@ o =
   delivery1: null
   delivery2: null
   exp_date: null
-  exp_date_value: '02/24/13 12:00'
-  b2d: 20.73
-  us: 0.961
-  ww: 0.843
   item_page: "https://www.bitmit.net/en/item/"
   sell_page: "https://www.bitmit.net/en/cp/se"
   interval: null
