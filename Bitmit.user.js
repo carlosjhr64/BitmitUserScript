@@ -108,12 +108,12 @@ price_format = function(p) {
 };
 
 base_pkg = function() {
-  return (o.description.value.match(o.codex))[0].match(/\w+/)[0];
+  return (o.description.match(o.codex))[0].match(/\w+/)[0];
 };
 
 base_prices = function() {
   var oz, prices, uk, us;
-  prices = (o.description.value.match(o.codex))[0].match(/\d+/g);
+  prices = (o.description.match(o.codex))[0].match(/\d+/g);
   if (base_pkg() === 'pkg') {
     oz = parseFloat(prices[0]);
     us = usps('pkg', oz);
@@ -230,10 +230,10 @@ check_for_pkg = function() {
 };
 
 check_for_description = function() {
-  var go;
+  var go, _ref, _ref1, _ref2;
   go = false;
-  o.description = document.getElementById("description");
-  if (o.description ? o.codex.test(o.description.value) : void 0) {
+  o.description = (_ref = document.getElementById("descriptionTextarea-wysiwyg-iframe")) != null ? (_ref1 = _ref.contentDocument) != null ? (_ref2 = _ref1.body) != null ? _ref2.innerHTML : void 0 : void 0 : void 0;
+  if (o.description != null ? o.codex.test(o.description) : void 0) {
     go = true;
   }
   if (go) {

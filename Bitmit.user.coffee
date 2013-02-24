@@ -84,10 +84,10 @@ price_format = (p) ->
   p.toFixed(3)
 
 base_pkg = () ->
-  ((o.description.value.match(o.codex))[0]).match(/\w+/)[0]
+  ((o.description.match(o.codex))[0]).match(/\w+/)[0]
 
 base_prices = () ->
-  prices = ((o.description.value.match(o.codex))[0]).match(/\d+/g)
+  prices = ((o.description.match(o.codex))[0]).match(/\d+/g)
   if base_pkg() is 'pkg'
     oz = parseFloat(prices[0])
     us = usps('pkg', oz)
@@ -173,8 +173,8 @@ check_for_pkg = () ->
 
 check_for_description = () ->
   go = false
-  o.description = document.getElementById("description")
-  go = true  if o.codex.test(o.description.value)  if o.description
+  o.description = document.getElementById("descriptionTextarea-wysiwyg-iframe")?.contentDocument?.body?.innerHTML
+  go = true  if o.codex.test(o.description)  if o.description?
   if go
     check_for_pkg()
   else
