@@ -37,10 +37,10 @@ usps = (type, oz) ->
       return 10.03 * n*1.57
 
 o =
-  exp_date_value: '03/03/13 12:00'
-  b2d: 23.68
-  us: 0.963
-  ww: 0.845
+  exp_date_value: '03/10/13 12:00'
+  b2d: 26.46
+  us: 0.96
+  ww: 0.847
   auto: true # automatic submit and close
   codex: /\[\w+\|\d+\/\d+\]/
   submit: null
