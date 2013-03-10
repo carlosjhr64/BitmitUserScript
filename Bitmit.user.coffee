@@ -37,7 +37,7 @@ usps = (type, oz) ->
       return 10.03 * n*1.57
 
 o =
-  exp_date_value: '03/10/13 12:00'
+  exp_date_value: '03/17/13 12:00'
   b2d: 32.29
   us: 0.961
   ww: 0.854
