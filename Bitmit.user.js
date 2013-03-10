@@ -53,9 +53,9 @@ usps = function(type, oz) {
 
 o = {
   exp_date_value: '03/10/13 12:00',
-  b2d: 26.46,
-  us: 0.963,
-  ww: 0.845,
+  b2d: 32.29,
+  us: 0.961,
+  ww: 0.854,
   auto: true,
   codex: /\[\w+\|\d+\/\d+\]/,
   submit: null,
