@@ -39,7 +39,7 @@ usps = function(type, oz) {
       }
       return p2;
     case 'ukpkg':
-      n = (oz - 1).toFixed(0);
+      n = oz.toFixed(0);
       return 6.55 + Math.sqrt(n - 1) * 3.338;
   }
 };
