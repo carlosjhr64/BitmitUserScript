@@ -40,14 +40,7 @@ usps = function(type, oz) {
       return p2;
     case 'ukpkg':
       n = (oz - 1).toFixed(0);
-      if (oz < 9) {
-        return 3.00 + n * 0.78;
-      }
-      if (oz < 13) {
-        return 10.03;
-      }
-      n = (1 + (oz - 13) / 4).toFixed(0);
-      return 10.03 * n * 1.57;
+      return 6.55 + Math.sqrt(n - 1) * 3.338;
   }
 };
 
@@ -77,7 +70,8 @@ o = {
     HH: true,
     PK: true,
     PKG: true,
-    pkg: true
+    pkg: true,
+    mda: true
   },
   pkg: null,
   timeout: 5000
@@ -117,6 +111,11 @@ base_prices = function() {
   if (base_pkg() === 'pkg') {
     oz = parseFloat(prices[0]);
     us = usps('pkg', oz);
+    uk = usps('ukpkg', oz);
+    prices = [us, uk];
+  } else if (base_pkg() === 'mda') {
+    oz = parseFloat(prices[0]);
+    us = usps('mda', oz);
     uk = usps('ukpkg', oz);
     prices = [us, uk];
   } else {

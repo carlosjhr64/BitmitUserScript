@@ -31,10 +31,7 @@ usps = (type, oz) ->
       return p2
     when 'ukpkg'
       n = (oz - 1).toFixed(0)
-      return 3.00 + n*0.78 if oz < 9
-      return 10.03 if oz < 13
-      n = (1 + (oz - 13)/4).toFixed(0)
-      return 10.03 * n*1.57
+      return 6.55+Math.sqrt(n-1)*3.338
 
 o =
   exp_date_value: '03/17/13 12:00'
@@ -63,6 +60,7 @@ o =
     PK: true
     PKG: true
     pkg: true
+    mda: true
 
   pkg: null
   timeout: 5000
@@ -91,6 +89,11 @@ base_prices = () ->
   if base_pkg() is 'pkg'
     oz = parseFloat(prices[0])
     us = usps('pkg', oz)
+    uk = usps('ukpkg', oz)
+    prices = [us, uk]
+  else if base_pkg() is 'mda'
+    oz = parseFloat(prices[0])
+    us = usps('mda', oz)
     uk = usps('ukpkg', oz)
     prices = [us, uk]
   else
