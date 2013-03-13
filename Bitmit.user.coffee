@@ -6,6 +6,59 @@
 # @version     1
 # ==/UserScript==
 
+UKPKG = [
+  6.55  #0oz
+  6.55  #1
+  6.55  #2
+  9.45  #3
+  9.45  #4
+  12.75 #5
+  12.75 #6
+  12.75 #7
+  12.75 #8
+  14.90 #9
+  14.90 #10
+  14.90 #11
+  14.90 #12
+  16.75 #13
+  16.75 #14
+  16.75 #15
+  16.75 #16
+  18.60 #17
+  18.60 #18
+  18.60 #19
+  18.60 #20
+  20.45 #21
+  20.45 #22
+  20.45 #23
+  20.45 #24
+  22.30 #25
+  22.30 #26
+  22.30 #27
+  22.30 #28
+  24.15 #29
+  24.15 #30
+  24.15 #31
+  24.15 #32
+  26.00 #33
+  26.00 #34
+  26.00 #35
+  26.00 #36
+  27.85 #37
+  27.85 #38
+  27.85 #39
+  27.85 #40
+  29.70 #41
+  29.70 #42
+  29.70 #43
+  29.70 #44
+  31.55 #45
+  31.55 #46
+  31.55 #47
+  31.55 #48
+  33.40 #49
+]
+
 usps = (type, oz) ->
   switch type
     when 'ltt'
@@ -31,7 +84,8 @@ usps = (type, oz) ->
       return p2
     when 'ukpkg'
       n = oz.toFixed(0)
-      return 6.55+Math.sqrt(n-1)*3.338
+      return UKPKG[n] if n < 50
+      return UKPKG[49]  + 0.4625*(n-49)
 
 o =
   exp_date_value: '03/17/13 12:00'
@@ -41,7 +95,7 @@ o =
   auto: true # automatic submit and close
   codex: /\[\w+\|\d+\/\d+\]/
   submit: null
-  description: null
+  note: null
   price: null
   delivery1: null
   delivery2: null
@@ -82,10 +136,10 @@ price_format = (p) ->
   p.toFixed(3)
 
 base_pkg = () ->
-  ((o.description.match(o.codex))[0]).match(/\w+/)[0]
+  ((o.note.match(o.codex))[0]).match(/\w+/)[0]
 
 base_prices = () ->
-  prices = ((o.description.match(o.codex))[0]).match(/\d+/g)
+  prices = ((o.note.match(o.codex))[0]).match(/\d+/g)
   if base_pkg() is 'pkg'
     oz = parseFloat(prices[0])
     us = usps('pkg', oz)
@@ -174,14 +228,14 @@ check_for_pkg = () ->
   else
     alert("Unknown type #{pkg}.")
 
-check_for_description = () ->
+check_for_note = () ->
   go = false
-  o.description = document.getElementById("descriptionTextarea-wysiwyg-iframe")?.contentDocument?.body?.innerHTML
-  go = true  if o.codex.test(o.description)  if o.description?
+  o.note = document.getElementById("txtareaInternalNote")?.innerHTML # .contentDocument?.body?.innerHTML
+  go = true  if o.codex.test(o.note)  if o.note?
   if go
     check_for_pkg()
   else
-    alert("Description is missing code.")
+    alert("Internal note code missing.")
 
 open_pages = (list) ->
   id = list[o.count]
@@ -197,7 +251,7 @@ check_for_submit = () ->
   o.submit = document.getElementById("formItemSellSubmit")
   if o.submit
     clearInterval(o.interval)
-    check_for_description()
+    check_for_note()
   else
     if document.getElementById("active").className is "active"
       list = document.getElementById("content")
