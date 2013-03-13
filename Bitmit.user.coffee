@@ -133,7 +133,7 @@ my_close = () ->
     setTimeout(window_close, o.timeout)
 
 price_format = (p) ->
-  p.toFixed(3)
+  p.toFixed(4)
 
 base_pkg = () ->
   ((o.note.match(o.codex))[0]).match(/\w+/)[0]

@@ -103,7 +103,7 @@ my_close = function() {
 };
 
 price_format = function(p) {
-  return p.toFixed(3);
+  return p.toFixed(4);
 };
 
 base_pkg = function() {
