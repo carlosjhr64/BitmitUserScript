@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby
+require 'open-uri'
+N=70*16 # upto 70 pounds
+puts <<EOT
+UKPKG=[]
+for i in [0..#{N}]
+  UKPKG[i] = new Object()
+UKPKG[0]=UKPKG[1]
+EOT
+1.upto(N) do |oz|
+  url = "http://ircalc.usps.com/MailServices.aspx?country=10150&m=6&o=#{oz}"
+  $stderr.puts url
+  page = open(url).read
+  rows = /<tr>.*?<\/tr>/m
+  fc = pm = false
+  while md = rows.match(page) do
+    row = md[0]
+    page = md.post_match
+    if row =~ /((First.Class)|(Priority Mail))/
+      type = $1
+      next if (type[0]=='F' && fc) || (type[0]=='P' && pm)
+      fc = true if type[0]=='F'
+      pm = true if type[0]=='P'
+      if row =~ /\$(\d{1,2}\.\d+)/
+        $stderr.puts "UKPKG[#{oz}]['#{type}']=#{$1}"
+        $stdout.puts "UKPKG[#{oz}]['#{type}']=#{$1}"
+      end
+    end
+    $stdout.flush
+  end
+end
