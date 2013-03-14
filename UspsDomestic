@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+require 'open-uri'
+N=70*16 # upto 70 pounds
+puts <<EOT
+USPKG=[]
+for i in [0..#{N}]
+  USPKG[i] = new Object()
+USPKG[0]=USPKG[1]
+EOT
+1.upto(N) do |oz|
+  url = "http://postcalc.usps.com/MailServices.aspx?m=6&dz=96813&oz=89433&pob=0&o=#{oz}"
+  $stderr.puts url
+  page = open(url).read
+  rows = /<tr>.*?<\/tr>/m
+  while md = rows.match(page) do
+    row = md[0]
+    page = md.post_match
+    if row =~ /((First.Class)|(Media.Mail)|(Standard.Post))/
+      type = $1
+      if row =~ /\$(\d+\.\d+)/
+        $stderr.puts "USPKG[#{oz}]['#{type}']=#{$1}"
+        $stdout.puts "USPKG[#{oz}]['#{type}']=#{$1}"
+      end
+    end
+    $stdout.flush
+  end
+end
