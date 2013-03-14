@@ -6,86 +6,26 @@
 # @version     1
 # ==/UserScript==
 
-UKPKG = [
-  6.55  #0oz
-  6.55  #1
-  6.55  #2
-  9.45  #3
-  9.45  #4
-  12.75 #5
-  12.75 #6
-  12.75 #7
-  12.75 #8
-  14.90 #9
-  14.90 #10
-  14.90 #11
-  14.90 #12
-  16.75 #13
-  16.75 #14
-  16.75 #15
-  16.75 #16
-  18.60 #17
-  18.60 #18
-  18.60 #19
-  18.60 #20
-  20.45 #21
-  20.45 #22
-  20.45 #23
-  20.45 #24
-  22.30 #25
-  22.30 #26
-  22.30 #27
-  22.30 #28
-  24.15 #29
-  24.15 #30
-  24.15 #31
-  24.15 #32
-  26.00 #33
-  26.00 #34
-  26.00 #35
-  26.00 #36
-  27.85 #37
-  27.85 #38
-  27.85 #39
-  27.85 #40
-  29.70 #41
-  29.70 #42
-  29.70 #43
-  29.70 #44
-  31.55 #45
-  31.55 #46
-  31.55 #47
-  31.55 #48
-  33.40 #49
-]
-
 usps = (type, oz) ->
+  n = oz.toFixed(0)
+  f = p = m = s = null
   switch type
-    when 'ltt'
-      return 0.45 if oz <= 1
-      return 0.65 if oz <= 2
-      return 0.85 if oz <= 3.5
-      return usps('flt', oz)
-    when 'flt'
-      n = (oz - 1).toFixed(0)
-      return 0.90 + n*0.20 if oz < 13
-      return usps('pkg', oz)
     when 'pkg'
-      n = (oz - 3).toFixed(0)
-      n = 0 if n < 0
-      return 1.95 + n*0.17
+      f = USPKG[n]?['First-Class']
+      s = USPKG[n]?['Standard Post']
     when 'mda'
-      p1 = usps('pkg', oz)
-      n = (oz/16).toFixed(0)
-      p2 = [2.38, 2.77, 3.16, 3.55, 3.94, 4.47, 4.99][n]
-      unless p2
-        p2 = 4.99 + (n-7)*0.40
-      return p1 if p1 < p2
-      return p2
+      f = USPKG[n]?['First-Class']
+      m = USPKG[n]?['Media Mail']
+      s = USPKG[n]?['Standard Post']
     when 'ukpkg'
-      n = oz.toFixed(0)
-      return UKPKG[n] if n < 50
-      return UKPKG[49]  + 0.4625*(n-49)
+      f = UKPKG[n]?['First-Class']
+      p = UKPKG[n]?['Priority Mail']
+  price = 1000.0 # rediculously high most of the time
+  price = f if f? and price > f
+  price = p if p? and price > p
+  price = m if m? and price > m
+  price = s if s? and price > s
+  return price
 
 o =
   exp_date_value: '03/17/13 12:00'
