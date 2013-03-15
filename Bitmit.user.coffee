@@ -29,7 +29,7 @@ usps = (type, oz) ->
 
 o =
   exp_date_value: '03/17/13 12:00'
-  b2d: 32.29
+  b2d: 35.31
   us: 0.961
   ww: 0.854
   auto: true # automatic submit and close
@@ -168,14 +168,49 @@ check_for_pkg = () ->
   else
     alert("Unknown type #{pkg}.")
 
+best_guess_for_oz = (p1,p2) ->
+  n1 = 0
+  n2 = 0
+  e1 = e2 = 1000.0 # big error
+  n = 0
+  type = 'pkg'
+  loop
+    n += 1
+    fd = USPKG[n]?['First-Class']
+    sp = USPKG[n]?['Standard Post']
+    mm = USPKG[n]?['Media Mail']
+    for us in [mm,fd,sp] when us and (e1 > us-p1 >= 0.0)
+      e1 = us-p1
+      n1 = n
+      if us is mm
+        type = 'mda'
+      else
+        type = 'pkg'
+    fi = UKPKG[n]?['First-Class']
+    mp = UKPKG[n]?['Priority Mail']
+    for uk in [fi,mp] when uk and (e2 > uk-p2 >= 0)
+      e2 = uk-p2
+      n2 = n
+    break unless fd or sp or mm or fi or mp
+  n = n1
+  n = n2 if n2 > n
+  return [type,n]
+
 check_for_note = () ->
   go = false
-  o.note = document.getElementById("txtareaInternalNote")?.innerHTML # .contentDocument?.body?.innerHTML
-  go = true  if o.codex.test(o.note)  if o.note?
-  if go
-    check_for_pkg()
-  else
-    alert("Internal note code missing.")
+  if o.note = document.getElementById("txtareaInternalNote")
+    # We're going to fix the note b/4 proceeding
+    if md = o.note.value.match(/\[(\w+)\|(\d+)\/(\d+)\]/)
+      if price2 = parseFloat(md[3])/100.0
+        price1 = parseFloat(md[2])/100.0
+        if price1? and price1 > 0.0 and price2 > 0.0
+          if oz = best_guess_for_oz(price1, price2)
+            o.note.value = "[#{oz[0]}|#{oz[1]}/0]#{md[1]}"
+    o.note = o.note.value
+    if o.codex.test(o.note)
+      check_for_pkg()
+    else
+      alert("Internal note code missing.")
 
 open_pages = (list) ->
   id = list[o.count]
