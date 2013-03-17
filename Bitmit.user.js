@@ -5422,10 +5422,10 @@ usps = function(type, oz) {
 };
 
 o = {
-  exp_date_value: '03/17/13 12:00',
-  b2d: 35.31,
-  us: 0.961,
-  ww: 0.854,
+  exp_date_value: '03/24/13 12:00',
+  b2d: 37.09,
+  us: 0.9626,
+  ww: 0.8573,
   auto: true,
   codex: /\[\w+\|\d+\/\d+\]/,
   submit: null,
