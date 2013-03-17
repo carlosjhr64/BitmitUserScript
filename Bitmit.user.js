@@ -5426,6 +5426,7 @@ o = {
   b2d: 37.09,
   us: 0.9626,
   ww: 0.8573,
+  gb: 0.9699,
   auto: true,
   codex: /\[\w+\|\d+\/\d+\]/,
   submit: null,
@@ -5433,6 +5434,7 @@ o = {
   price: null,
   delivery1: null,
   delivery2: null,
+  delivery3: null,
   exp_date: null,
   item_page: "https://www.bitmit.net/en/item/",
   sell_page: "https://www.bitmit.net/en/cp/se",
@@ -5527,6 +5529,12 @@ delivery_price = function(country) {
     case "US":
       delivery = 0.0;
       break;
+    case "GB":
+      delivery = ww_price();
+      delivery /= o.gb;
+      delivery /= o.b2d;
+      delivery -= auction_price();
+      break;
     default:
       delivery = ww_price();
       delivery /= o.ww;
@@ -5560,6 +5568,9 @@ edit_form = function() {
   edits += modify_n(o.price, auction_price());
   edits += modify_n(o.delivery1, delivery_price(document.getElementById("delivery1_country").value));
   edits += modify_n(o.delivery2, delivery_price(document.getElementById("delivery2_country").value));
+  if (o.delivery3) {
+    edits += modify_n(o.delivery3, delivery_price(document.getElementById("delivery3_country").value));
+  }
   edits += modify_t(o.exp_date, o.exp_date_value);
   if (edits > 0) {
     console.log("There were " + edits + " edits.");
@@ -5582,6 +5593,7 @@ check_for_variables = function() {
   if (o.price.value != null) {
     o.delivery1 = document.getElementById("delivery1_price");
     o.delivery2 = document.getElementById("delivery2_price");
+    o.delivery3 = document.getElementById("delivery3_price");
     o.exp_date = document.getElementById("itemDurationEndtimeCalendar");
     if ((o.delivery1 != null) && (o.delivery2 != null) && (o.exp_date != null)) {
       go = true;

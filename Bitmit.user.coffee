@@ -32,6 +32,7 @@ o =
   b2d: 37.09
   us: 0.9626
   ww: 0.8573
+  gb: 0.9699
   auto: true # automatic submit and close
   codex: /\[\w+\|\d+\/\d+\]/
   submit: null
@@ -39,6 +40,7 @@ o =
   price: null
   delivery1: null
   delivery2: null
+  delivery3: null # optional
   exp_date: null
   item_page: "https://www.bitmit.net/en/item/"
   sell_page: "https://www.bitmit.net/en/cp/se"
@@ -110,6 +112,11 @@ delivery_price = (country) ->
   switch country
     when "US"
       delivery = 0.0
+    when "GB"
+      delivery = ww_price()
+      delivery /= o.gb
+      delivery /= o.b2d
+      delivery -= auction_price()
     else
       delivery = ww_price()
       delivery /= o.ww
@@ -137,6 +144,9 @@ edit_form = () ->
   delivery_price(document.getElementById("delivery1_country").value))
   edits += modify_n(o.delivery2,
   delivery_price(document.getElementById("delivery2_country").value))
+  if o.delivery3
+    edits += modify_n(o.delivery3,
+    delivery_price(document.getElementById("delivery3_country").value))
   edits += modify_t(o.exp_date, o.exp_date_value)
   if edits > 0
     console.log "There were #{edits} edits."
@@ -153,6 +163,7 @@ check_for_variables = () ->
   if o.price.value?
     o.delivery1 = document.getElementById("delivery1_price")
     o.delivery2 = document.getElementById("delivery2_price")
+    o.delivery3 = document.getElementById("delivery3_price") # Optional
     o.exp_date = document.getElementById("itemDurationEndtimeCalendar")
     go = true  if (o.delivery1?) and (o.delivery2?) and (o.exp_date?)
   if go
