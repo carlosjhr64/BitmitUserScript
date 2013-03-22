@@ -5486,7 +5486,7 @@ my_close = function() {
 };
 
 price_format = function(p) {
-  return p.toFixed(4);
+  return p.toFixed(3);
 };
 
 base_pkg = function() {
