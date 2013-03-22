@@ -1,11 +1,3 @@
-# ==UserScript==
-# @name        Bitmit
-# @namespace   Bitmit
-# @description Bitmit Auto Edit
-# @include     about:addons
-# @version     1
-# ==/UserScript==
-
 usps = (type, oz) ->
   n = oz.toFixed(0)
   f = p = m = s = null
@@ -29,7 +21,7 @@ usps = (type, oz) ->
 
 o =
   exp_date_value: '03/24/13 12:00'
-  b2d: 56.65
+  b2d: 71.18
   us: 0.9626
   ww: 0.8573
   gb: 0.9699
