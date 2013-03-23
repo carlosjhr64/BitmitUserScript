@@ -5574,6 +5574,7 @@ modify_t = function(s, t) {
 edit_form = function() {
   var clickit, edits;
   edits = 0;
+  document.getElementById("chkbox_price_fix").checked = false;
   edits += modify_n(o.price, auction_price());
   edits += modify_n(o.delivery1, delivery_price(document.getElementById("delivery1_country").value));
   edits += modify_n(o.delivery2, delivery_price(document.getElementById("delivery2_country").value));

@@ -131,6 +131,7 @@ modify_t = (s, t) ->
 
 edit_form = () ->
   edits = 0
+  document.getElementById("chkbox_price_fix").checked = false
   edits += modify_n(o.price, auction_price())
   edits += modify_n(o.delivery1,
   delivery_price(document.getElementById("delivery1_country").value))
