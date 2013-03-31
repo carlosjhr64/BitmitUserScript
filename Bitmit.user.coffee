@@ -20,11 +20,11 @@ usps = (type, oz) ->
   return price
 
 o =
-  exp_date_value: '03/31/13 12:00'
-  b2d: 61.41
-  us: 0.9644
-  ww: 0.8588
-  gb: 0.973
+  exp_date_value: '04/07/13 12:00'
+  b2d: 83.90
+  us: 0.9623
+  ww: 0.8502
+  gb: 0.976
   auto: true # automatic submit and close
   codex: /\[\w+\|\d+\/\d+\]/
   submit: null
@@ -131,7 +131,7 @@ modify_t = (s, t) ->
 
 edit_form = () ->
   edits = 0
-  document.getElementById("chkbox_price_fix").checked = false
+  #document.getElementById("chkbox_price_fix").checked = false
   edits += modify_n(o.price, auction_price())
   edits += modify_n(o.delivery1,
   delivery_price(document.getElementById("delivery1_country").value))
@@ -152,7 +152,7 @@ edit_form = () ->
 
 check_for_variables = () ->
   go = false
-  o.price = document.getElementById("price_auction")
+  o.price = document.getElementById("priceAuction")
   if o.price.value?
     o.delivery1 = document.getElementById("delivery1_price")
     o.delivery2 = document.getElementById("delivery2_price")
