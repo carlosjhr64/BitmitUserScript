@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 require 'open-uri'
-N=70*16 # upto 70 pounds
+N= 368
 puts <<EOT
 UKPKG=[]
 for i in [0..#{N}]
