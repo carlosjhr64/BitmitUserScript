@@ -5431,8 +5431,8 @@ usps = function(type, oz) {
 };
 
 o = {
-  exp_date_value: '04/07/13 12:00',
-  b2d: 83.90,
+  exp_date_value: '04/14/13 12:00',
+  b2d: 120.24,
   us: 0.9623,
   ww: 0.8502,
   gb: 0.976,
