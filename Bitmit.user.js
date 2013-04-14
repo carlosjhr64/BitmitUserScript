@@ -5431,11 +5431,11 @@ usps = function(type, oz) {
 };
 
 o = {
-  exp_date_value: '04/14/13 12:00',
-  b2d: 120.24,
-  us: 0.9623,
-  ww: 0.8502,
-  gb: 0.976,
+  exp_date_value: '04/21/13 12:00',
+  b2d: 106.54,
+  us: 0.9593,
+  ww: 0.8633,
+  gb: 0.9749,
   auto: true,
   codex: /\[\w+\|\d+\/\d+\]/,
   submit: null,
