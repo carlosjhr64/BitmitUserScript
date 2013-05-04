@@ -20,11 +20,11 @@ usps = (type, oz) ->
   return price
 
 o =
-  exp_date_value: '05/05/13 12:00'
-  b2d: 180.96 # forecasted 2 weeks from now :-?? LOL
-  us: 0.9583
-  ww: 0.8723
-  gb: 0.9777
+  exp_date_value: '05/12/13 12:00'
+  b2d: 84.54 # forecasted low 2 weeks from now :-?? LOL
+  us: 0.9575
+  ww: 0.8823
+  gb: 0.9744
   auto: true # automatic submit and close
   codex: /\[\w+\|\d+\/\d+\]/
   submit: null
