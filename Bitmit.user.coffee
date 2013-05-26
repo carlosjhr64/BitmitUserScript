@@ -20,8 +20,8 @@ usps = (type, oz) ->
   return price
 
 o =
-  exp_date_value: '05/26/13 12:00'
-  b2d: 181.30 # forecasted low 2 weeks from now :-?? LOL
+  exp_date_value: '06/02/13 12:00'
+  b2d: 204.20 # forecasted low 2 weeks from now :-?? LOL
   us: 0.9589
   ww: 0.8817
   gb: 0.9664
