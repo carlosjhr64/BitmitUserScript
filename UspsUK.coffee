@@ -1,5 +1,5 @@
 UKPKG=[]
-for i in [0..1120]
+for i in [0..368]
   UKPKG[i] = new Object()
 UKPKG[0]=UKPKG[1]
 UKPKG[1]['Priority Mail']=42.00

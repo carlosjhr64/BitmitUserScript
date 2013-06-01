@@ -12,7 +12,7 @@ var UKPKG, USPKG, auction_price, base_pkg, base_prices, best_guess_for_oz, check
 
 UKPKG = [];
 
-for (i = _i = 0; _i <= 1120; i = ++_i) {
+for (i = _i = 0; _i <= 368; i = ++_i) {
   UKPKG[i] = new Object();
 }
 
@@ -5431,8 +5431,8 @@ usps = function(type, oz) {
 };
 
 o = {
-  exp_date_value: '06/02/13 12:00',
-  b2d: 204.20,
+  exp_date_value: '06/09/13 12:00',
+  b2d: 138.93,
   us: 0.9589,
   ww: 0.8817,
   gb: 0.9664,
