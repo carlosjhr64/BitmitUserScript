@@ -20,11 +20,11 @@ usps = (type, oz) ->
   return price
 
 o =
-  exp_date_value: '06/30/13 12:00'
-  b2d: 122.16 # forecasted low 2 weeks from now :-?? LOL
-  us: 0.9589
-  ww: 0.8817
-  gb: 0.9664
+  exp_date_value: '07/07/13 12:00'
+  b2d: 113.44 # forecasted low 2 weeks from now :-?? LOL
+  us: 0.9163
+  ww: 0.9163
+  gb: 0.9785 # Brazil's value now
   auto: true # automatic submit and close
   codex: /\[\w+\|\d+\/\d+\]/
   submit: null
@@ -104,7 +104,7 @@ delivery_price = (country) ->
   switch country
     when "US"
       delivery = 0.0
-    when "GB"
+    when "GB", "BR"
       delivery = ww_price()
       delivery /= o.gb
       delivery /= o.b2d
@@ -129,17 +129,27 @@ modify_t = (s, t) ->
   s.value = t
   1
 
+modify_country = (country) ->
+  if country.value == "GB"
+    for option in country.options
+      if option.value == "BR"
+        option.selected = true
+        break
+
 edit_form = () ->
   edits = 0
   #document.getElementById("chkbox_price_fix").checked = false
   edits += modify_n(o.price, auction_price())
-  edits += modify_n(o.delivery1,
-  delivery_price(document.getElementById("delivery1_country").value))
-  edits += modify_n(o.delivery2,
-  delivery_price(document.getElementById("delivery2_country").value))
+  country1 = document.getElementById("delivery1_country")
+  modify_country(country1)
+  edits += modify_n(o.delivery1, delivery_price(country1.value))
+  country2 = document.getElementById("delivery2_country")
+  modify_country(country2)
+  edits += modify_n(o.delivery2, delivery_price(country2.value))
   if o.delivery3
-    edits += modify_n(o.delivery3,
-    delivery_price(document.getElementById("delivery3_country").value))
+    country3 = document.getElementById("delivery3_country")
+    modify_country(country3)
+    edits += modify_n(o.delivery3, delivery_price(country3.value))
   edits += modify_t(o.exp_date, o.exp_date_value)
   if edits > 0
     console.log "There were #{edits} edits."

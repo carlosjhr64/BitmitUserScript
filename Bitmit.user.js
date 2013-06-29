@@ -8,7 +8,7 @@
 //@grant       none
 //==/UserScript==;
 
-var UKPKG, USPKG, auction_price, base_pkg, base_prices, best_guess_for_oz, check_for_note, check_for_pkg, check_for_submit, check_for_variables, delivery_price, edit_form, i, modify_n, modify_t, my_close, my_open, o, open_pages, price_format, run, us_price, usps, ww_price, _i, _j;
+var UKPKG, USPKG, auction_price, base_pkg, base_prices, best_guess_for_oz, check_for_note, check_for_pkg, check_for_submit, check_for_variables, delivery_price, edit_form, i, modify_country, modify_n, modify_t, my_close, my_open, o, open_pages, price_format, run, us_price, usps, ww_price, _i, _j;
 
 UKPKG = [];
 
@@ -5431,11 +5431,11 @@ usps = function(type, oz) {
 };
 
 o = {
-  exp_date_value: '06/30/13 12:00',
-  b2d: 122.16,
-  us: 0.9589,
-  ww: 0.8817,
-  gb: 0.9664,
+  exp_date_value: '07/07/13 12:00',
+  b2d: 113.44,
+  us: 0.9163,
+  ww: 0.9163,
+  gb: 0.9785,
   auto: true,
   codex: /\[\w+\|\d+\/\d+\]/,
   submit: null,
@@ -5539,6 +5539,7 @@ delivery_price = function(country) {
       delivery = 0.0;
       break;
     case "GB":
+    case "BR":
       delivery = ww_price();
       delivery /= o.gb;
       delivery /= o.b2d;
@@ -5571,14 +5572,38 @@ modify_t = function(s, t) {
   return 1;
 };
 
+modify_country = function(country) {
+  var option, _k, _len, _ref, _results;
+  if (country.value === "GB") {
+    _ref = country.options;
+    _results = [];
+    for (_k = 0, _len = _ref.length; _k < _len; _k++) {
+      option = _ref[_k];
+      if (option.value === "BR") {
+        option.selected = true;
+        break;
+      } else {
+        _results.push(void 0);
+      }
+    }
+    return _results;
+  }
+};
+
 edit_form = function() {
-  var clickit, edits;
+  var clickit, country1, country2, country3, edits;
   edits = 0;
   edits += modify_n(o.price, auction_price());
-  edits += modify_n(o.delivery1, delivery_price(document.getElementById("delivery1_country").value));
-  edits += modify_n(o.delivery2, delivery_price(document.getElementById("delivery2_country").value));
+  country1 = document.getElementById("delivery1_country");
+  modify_country(country1);
+  edits += modify_n(o.delivery1, delivery_price(country1.value));
+  country2 = document.getElementById("delivery2_country");
+  modify_country(country2);
+  edits += modify_n(o.delivery2, delivery_price(country2.value));
   if (o.delivery3) {
-    edits += modify_n(o.delivery3, delivery_price(document.getElementById("delivery3_country").value));
+    country3 = document.getElementById("delivery3_country");
+    modify_country(country3);
+    edits += modify_n(o.delivery3, delivery_price(country3.value));
   }
   edits += modify_t(o.exp_date, o.exp_date_value);
   if (edits > 0) {
