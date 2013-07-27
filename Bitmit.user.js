@@ -5432,7 +5432,7 @@ usps = function(type, oz) {
 
 o = {
   exp_date_value: '08/04/13 12:00',
-  b2d: 87.10,
+  b2d: 90.85,
   us: 0.9584,
   ww: 0.9280,
   gb: 0.9853,
