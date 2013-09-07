@@ -104,7 +104,7 @@ delivery_price = (country) ->
   switch country
     when "US"
       delivery = 0.0
-    when "GB", "BR", "NZ"
+    when "GB", "BR", "NZ", "CA"
       delivery = ww_price()
       delivery /= o.gb
       delivery /= o.b2d

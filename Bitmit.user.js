@@ -5541,6 +5541,7 @@ delivery_price = function(country) {
     case "GB":
     case "BR":
     case "NZ":
+    case "CA":
       delivery = ww_price();
       delivery /= o.gb;
       delivery /= o.b2d;
