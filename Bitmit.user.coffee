@@ -23,8 +23,8 @@ o =
   exp_date_value: '09/15/13 12:00'
   b2d: 131.30
   us: 0.9602
-  ww: 0.9345
-  gb: 1.0000 # This weeks special
+  ww: 0.9344
+  gb: 0.9733 # This weeks special
   auto: true # automatic submit and close
   codex: /\[\w+\|\d+\/\d+\]/
   submit: null
