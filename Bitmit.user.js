@@ -5431,11 +5431,11 @@ usps = function(type, oz) {
 };
 
 o = {
-  exp_date_value: '09/08/13 12:00',
-  b2d: 123.54,
+  exp_date_value: '09/15/13 12:00',
+  b2d: 131.30,
   us: 0.9602,
   ww: 0.9345,
-  gb: 0.9755,
+  gb: 1.0000,
   auto: true,
   codex: /\[\w+\|\d+\/\d+\]/,
   submit: null,
@@ -5575,12 +5575,12 @@ modify_t = function(s, t) {
 
 modify_country = function(country) {
   var option, _k, _len, _ref, _results;
-  if (country.value === "BR") {
+  if (country.value === "NZ") {
     _ref = country.options;
     _results = [];
     for (_k = 0, _len = _ref.length; _k < _len; _k++) {
       option = _ref[_k];
-      if (option.value === "NZ") {
+      if (option.value === "CA") {
         option.selected = true;
         break;
       } else {

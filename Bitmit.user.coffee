@@ -20,11 +20,11 @@ usps = (type, oz) ->
   return price
 
 o =
-  exp_date_value: '09/08/13 12:00'
-  b2d: 123.54
+  exp_date_value: '09/15/13 12:00'
+  b2d: 131.30
   us: 0.9602
   ww: 0.9345
-  gb: 0.9755 # NZ's value now
+  gb: 1.0000 # This weeks special
   auto: true # automatic submit and close
   codex: /\[\w+\|\d+\/\d+\]/
   submit: null
@@ -130,9 +130,9 @@ modify_t = (s, t) ->
   1
 
 modify_country = (country) ->
-  if country.value == "BR"
+  if country.value == "NZ"
     for option in country.options
-      if option.value == "NZ"
+      if option.value == "CA"
         option.selected = true
         break
 
