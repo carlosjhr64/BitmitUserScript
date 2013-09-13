@@ -20,11 +20,11 @@ usps = (type, oz) ->
   return price
 
 o =
-  exp_date_value: '09/15/13 12:00'
-  b2d: 131.30
-  us: 0.9602
-  ww: 0.9344
-  gb: 0.9733 # This weeks special
+  exp_date_value: '09/22/13 12:00'
+  b2d: 142.62
+  ww: 0.94
+  us: 0.96
+  gb: 0.98 # This weeks special
   auto: true # automatic submit and close
   codex: /\[\w+\|\d+\/\d+\]/
   submit: null
@@ -104,7 +104,7 @@ delivery_price = (country) ->
   switch country
     when "US"
       delivery = 0.0
-    when "GB", "BR", "NZ", "CA"
+    when "GB", "BR", "NZ", "CA", "ES"
       delivery = ww_price()
       delivery /= o.gb
       delivery /= o.b2d
@@ -130,9 +130,9 @@ modify_t = (s, t) ->
   1
 
 modify_country = (country) ->
-  if country.value == "NZ"
+  if country.value == "CA"
     for option in country.options
-      if option.value == "CA"
+      if option.value == "ES"
         option.selected = true
         break
 
