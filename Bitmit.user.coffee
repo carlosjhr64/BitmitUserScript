@@ -20,8 +20,8 @@ usps = (type, oz) ->
   return price
 
 o =
-  exp_date_value: '10/13/13 12:00'
-  b2d: 127.96
+  exp_date_value: '10/12/13 23:59'
+  b2d: 123.10
   ww: 0.94
   us: 0.96
   gb: 0.98 # This weeks special
