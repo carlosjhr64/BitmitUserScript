@@ -5431,8 +5431,8 @@ usps = function(type, oz) {
 };
 
 o = {
-  exp_date_value: '10/19/13 23:59',
-  b2d: 125.91,
+  exp_date_value: '10/26/13 23:59',
+  b2d: 153.25,
   ww: 0.94,
   us: 0.96,
   gb: 0.98,
@@ -5547,6 +5547,7 @@ delivery_price = function(country) {
     case "FI":
     case "NL":
     case "AR":
+    case "RO":
       delivery = ww_price();
       delivery /= o.gb;
       delivery /= o.b2d;
@@ -5581,12 +5582,12 @@ modify_t = function(s, t) {
 
 modify_country = function(country) {
   var option, _k, _len, _ref, _results;
-  if (country.value === "NL") {
+  if (country.value === "AR") {
     _ref = country.options;
     _results = [];
     for (_k = 0, _len = _ref.length; _k < _len; _k++) {
       option = _ref[_k];
-      if (option.value === "AR") {
+      if (option.value === "RO") {
         option.selected = true;
         break;
       } else {
