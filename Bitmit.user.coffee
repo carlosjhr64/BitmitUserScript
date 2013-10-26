@@ -20,8 +20,8 @@ usps = (type, oz) ->
   return price
 
 o =
-  exp_date_value: '10/26/13 23:59'
-  b2d: 153.25
+  exp_date_value: '11/02/13 23:59'
+  b2d: 162.53
   ww: 0.94
   us: 0.96
   gb: 0.98 # This weeks special
@@ -130,9 +130,9 @@ modify_t = (s, t) ->
   1
 
 modify_country = (country) ->
-  if country.value == "AR"
+  if country.value == "RO"
     for option in country.options
-      if option.value == "RO"
+      if option.value == "CA"
         option.selected = true
         break
 
