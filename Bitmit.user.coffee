@@ -20,8 +20,8 @@ usps = (type, oz) ->
   return price
 
 o =
-  exp_date_value: '11/02/13 23:59'
-  b2d: 162.53
+  exp_date_value: '11/09/13 23:59'
+  b2d: 183.50
   ww: 0.94
   us: 0.96
   gb: 0.98 # This weeks special
@@ -104,7 +104,7 @@ delivery_price = (country) ->
   switch country
     when "US"
       delivery = 0.0
-    when "GB", "BR", "NZ", "CA", "ES", "ZA", "FI", "NL", "AR", "RO"
+    when "GB", "BR", "NZ", "CA", "ES", "ZA", "FI", "NL", "AR", "RO", "MX"
       delivery = ww_price()
       delivery /= o.gb
       delivery /= o.b2d
@@ -130,9 +130,9 @@ modify_t = (s, t) ->
   1
 
 modify_country = (country) ->
-  if country.value == "RO"
+  if country.value == "CA"
     for option in country.options
-      if option.value == "CA"
+      if option.value == "MX"
         option.selected = true
         break
 
@@ -245,7 +245,7 @@ check_for_submit = () ->
     if document.getElementById("active").className is "active"
       list = document.getElementById("content")
       if list
-        list = list.innerHTML.match(/>\d+</g)
+        list = list.innerHTML.match(/>\d\d\d\d\d</g)
         if (list) and (list.length > 0)
           clearInterval(o.interval)
           console.log("Opening #{list.length} pages.")

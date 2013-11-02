@@ -5431,8 +5431,8 @@ usps = function(type, oz) {
 };
 
 o = {
-  exp_date_value: '11/02/13 23:59',
-  b2d: 162.53,
+  exp_date_value: '11/09/13 23:59',
+  b2d: 183.50,
   ww: 0.94,
   us: 0.96,
   gb: 0.98,
@@ -5548,6 +5548,7 @@ delivery_price = function(country) {
     case "NL":
     case "AR":
     case "RO":
+    case "MX":
       delivery = ww_price();
       delivery /= o.gb;
       delivery /= o.b2d;
@@ -5582,12 +5583,12 @@ modify_t = function(s, t) {
 
 modify_country = function(country) {
   var option, _k, _len, _ref, _results;
-  if (country.value === "RO") {
+  if (country.value === "CA") {
     _ref = country.options;
     _results = [];
     for (_k = 0, _len = _ref.length; _k < _len; _k++) {
       option = _ref[_k];
-      if (option.value === "CA") {
+      if (option.value === "MX") {
         option.selected = true;
         break;
       } else {
@@ -5754,7 +5755,7 @@ check_for_submit = function() {
     if (document.getElementById("active").className === "active") {
       list = document.getElementById("content");
       if (list) {
-        list = list.innerHTML.match(/>\d+</g);
+        list = list.innerHTML.match(/>\d\d\d\d\d</g);
         if (list && (list.length > 0)) {
           clearInterval(o.interval);
           console.log("Opening " + list.length + " pages.");
